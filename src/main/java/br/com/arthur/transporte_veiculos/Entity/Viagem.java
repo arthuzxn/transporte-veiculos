@@ -1,4 +1,4 @@
-package Entity;
+package br.com.arthur.transporte_veiculos.Entity;
 
 
 import jakarta.persistence.*;
@@ -26,18 +26,18 @@ public class Viagem {
     @ManyToOne
     @JoinColumn(name = "equipamento_id")
     private Equipamento equipamento;
-    private Long numeroViagem;
+    private Long numero_viagem;
     @OneToMany(mappedBy = "viagem")
     private List<Veiculo> veiculos;
     @ManyToOne
     @JoinColumn(name = "filial_id")
     private Filial filial;
-    private LocalDate dataEmissao;
-    private LocalDate dataPrevista;
-    private LocalDateTime momentoEntrega;
+    private LocalDateTime momento_emissao;
+    private LocalDate data_prevista_entrega;
+    private LocalDateTime data_entrega;
     @ManyToMany
     @JoinTable(
-            name = "ViagemDealer",
+            name = "TB_VIAGEM_DEALER",
             joinColumns = @JoinColumn(name = "id_viagem"),
             inverseJoinColumns = @JoinColumn(name = "id_dealer")
     )

@@ -1,4 +1,4 @@
-package Enums;
+package br.com.arthur.transporte_veiculos.Enums;
 
 public enum MarcaVeiculo {
     GENERAL_MOTORS,

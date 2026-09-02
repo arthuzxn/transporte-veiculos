@@ -1,4 +1,4 @@
-package Entity;
+package br.com.arthur.transporte_veiculos.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,6 +20,7 @@ public class Filial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String codigoFilial;
+    private String apelido;
     @OneToOne
     @JoinColumn(name = "endereco_id", unique = true)
     private Endereco endereco;

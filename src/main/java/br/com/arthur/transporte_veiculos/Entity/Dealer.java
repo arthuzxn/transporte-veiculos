@@ -1,4 +1,4 @@
-package Entity;
+package br.com.arthur.transporte_veiculos.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,8 @@ public class Dealer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String codigoDealer;
+    @Column(name = "codigo_dealer", nullable = false)
+    private String codigo_dealer;
     private String nome;
     @OneToOne
     @JoinColumn(name = "endereco_id", unique = true)

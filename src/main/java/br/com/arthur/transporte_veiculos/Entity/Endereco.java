@@ -1,4 +1,4 @@
-package Entity;
+package br.com.arthur.transporte_veiculos.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,5 +22,6 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String estado;
+    @Column(nullable = false)
     private String pais = "Brasil";
 }

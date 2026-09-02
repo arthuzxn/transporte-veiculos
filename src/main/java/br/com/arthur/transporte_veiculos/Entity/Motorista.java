@@ -1,4 +1,4 @@
-package Entity;
+package br.com.arthur.transporte_veiculos.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

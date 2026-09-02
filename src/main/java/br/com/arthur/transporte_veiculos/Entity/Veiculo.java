@@ -1,8 +1,8 @@
-package Entity;
+package br.com.arthur.transporte_veiculos.Entity;
 
 
-import Enums.MarcaVeiculo;
-import Enums.StatusVeiculo;
+import br.com.arthur.transporte_veiculos.Enums.MarcaVeiculo;
+import br.com.arthur.transporte_veiculos.Enums.StatusVeiculo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
