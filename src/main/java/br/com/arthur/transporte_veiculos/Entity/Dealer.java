@@ -7,21 +7,22 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
 @Entity
-@Table(name = "TB_TRANSPORTADORA")
-@Data
+@Table(name = "TB_DEALER")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Transportadora {
+@Data
+public class Dealer {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cnpj;
-    @OneToMany(mappedBy = "transportadora")
-    private List<Motorista> motoristas;
-    @OneToMany(mappedBy = "transportadora")
-    private List<Equipamento> equipamentos;
-
+    private String codigoDealer;
+    private String nome;
+    @OneToOne
+    @JoinColumn(name = "endereco_id", unique = true)
+    private Endereco endereco;
+    @ManyToMany(mappedBy = "dealers")
+    private List<Viagem>viagens;
 }

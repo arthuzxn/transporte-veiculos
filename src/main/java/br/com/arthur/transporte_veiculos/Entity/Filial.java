@@ -1,9 +1,18 @@
 package Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+
+@Entity
+@Table(name="TB_FILIAL")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Filial {
 
 
