@@ -1,5 +1,6 @@
 package br.com.arthur.transporte_veiculos.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,8 +21,10 @@ public class Transportadora {
     private Long id;
     private String nome;
     private String cnpj;
+    @JsonIgnore
     @OneToMany(mappedBy = "transportadora")
     private List<Motorista> motoristas;
+    @JsonIgnore
     @OneToMany(mappedBy = "transportadora")
     private List<Equipamento> equipamentos;
 

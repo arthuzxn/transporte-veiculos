@@ -1,5 +1,6 @@
 package br.com.arthur.transporte_veiculos.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class Dealer {
     @OneToOne
     @JoinColumn(name = "endereco_id", unique = true)
     private Endereco endereco;
+    @JsonIgnore
     @ManyToMany(mappedBy = "dealers")
     private List<Viagem>viagens;
 }

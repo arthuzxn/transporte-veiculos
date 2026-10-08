@@ -1,5 +1,6 @@
 package br.com.arthur.transporte_veiculos.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class Motorista {
     private Long id;
     private String cpf;
     private String nome;
+    @JsonIgnore
     @OneToMany(mappedBy = "motorista")
     private List<Viagem> viagens;
     private LocalDate dataNascimento;

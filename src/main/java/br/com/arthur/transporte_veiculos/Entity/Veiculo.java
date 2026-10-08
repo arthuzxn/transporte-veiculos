@@ -3,6 +3,7 @@ package br.com.arthur.transporte_veiculos.Entity;
 
 import br.com.arthur.transporte_veiculos.Enums.MarcaVeiculo;
 import br.com.arthur.transporte_veiculos.Enums.StatusVeiculo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +29,10 @@ public class Veiculo {
     @Enumerated(EnumType.STRING)
     private StatusVeiculo status;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "viagem_id")
     private Viagem viagem;
+    @JsonIgnore
     @OneToMany(mappedBy = "veiculo")
     private List<Ocorrencia> ocorrencias;
 
