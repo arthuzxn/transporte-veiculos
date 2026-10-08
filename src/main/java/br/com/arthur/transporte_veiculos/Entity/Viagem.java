@@ -26,6 +26,7 @@ public class Viagem {
     @ManyToOne
     @JoinColumn(name = "equipamento_id")
     private Equipamento equipamento;
+    @Column(unique = true)
     private Long numero_viagem;
     @OneToMany(mappedBy = "viagem")
     private List<Veiculo> veiculos;
