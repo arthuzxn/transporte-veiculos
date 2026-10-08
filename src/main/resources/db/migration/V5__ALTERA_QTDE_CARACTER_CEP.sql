@@ -1,0 +1,3 @@
+ALTER TABLE TB_ENDERECO
+    ALTER COLUMN cep
+          VARCHAR(9);
