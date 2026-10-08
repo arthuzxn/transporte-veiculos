@@ -1,18 +1,15 @@
 package br.com.arthur.transporte_veiculos.Service;
 
 
-import br.com.arthur.transporte_veiculos.Entity.Motorista;
 import br.com.arthur.transporte_veiculos.Entity.Viagem;
 import br.com.arthur.transporte_veiculos.Repository.ViagemRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.dialect.function.CoalesceIfnullEmulation;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
