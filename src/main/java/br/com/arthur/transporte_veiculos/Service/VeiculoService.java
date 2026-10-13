@@ -24,14 +24,14 @@ public class VeiculoService {
 
     public void deletarVeiculo(Long id){
         if(!veiculoRepository.existsById(id)){
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "ID "+id+", não encontrado");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado");
         }
         veiculoRepository.deleteById(id);
     }
 
     public Veiculo atualizarVeiculo(Long id, Veiculo veiculo){
         if(!veiculoRepository.existsById(id)){
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "ID "+id+", não encontrado");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado");
         }
         veiculo.setId(id);
         return veiculoRepository.save(veiculo);
