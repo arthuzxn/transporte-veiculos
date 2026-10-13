@@ -61,5 +61,15 @@ public class VeiculoService {
         }
     }
 
+    public void veiculoEntregue(Viagem viagem, List<Veiculo> veiculosEntregues){
+        for(Veiculo veiculo: veiculosEntregues ){
+            if(veiculo.getStatus() != StatusVeiculo.EMBARCADO){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Veiculo para ser entregue precisa estar embarcado");
+            }
+            veiculo.setStatus(StatusVeiculo.ENTREGUE);
+            veiculoRepository.save(veiculo);
+        }
+    }
+
 
 }

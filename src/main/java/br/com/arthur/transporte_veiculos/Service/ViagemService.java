@@ -1,6 +1,10 @@
 package br.com.arthur.transporte_veiculos.Service;
 
 
+import br.com.arthur.transporte_veiculos.DTO.Viagem.FinalizarViagemRequisicaoDTO;
+import br.com.arthur.transporte_veiculos.DTO.Viagem.ViagemDTO;
+import br.com.arthur.transporte_veiculos.DTO.Viagem.ViagemMapper;
+import br.com.arthur.transporte_veiculos.DTO.Viagem.ViagemRespostaDTO;
 import br.com.arthur.transporte_veiculos.Entity.Viagem;
 import br.com.arthur.transporte_veiculos.Repository.ViagemRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +22,7 @@ public class ViagemService {
     private final ViagemRepository viagemRepository;
     private final MotoristaService motoristaService;
     private final VeiculoService veiculoService;
+    private final ViagemMapper viagemMapper;
 
     public void validarViagem(Viagem viagem){
 
@@ -48,13 +53,15 @@ public class ViagemService {
 
     }
 
-    public Viagem criarViagem(Viagem viagem){
-        validarViagem(viagem);
+    public ViagemRespostaDTO criarViagem(ViagemDTO viagemDTO){
+        Viagem viagem = viagemMapper.map(viagemDTO);
         LocalDateTime dataHoraAgora = LocalDateTime.now();
         viagem.setMomento_emissao(dataHoraAgora);
+        viagem.setData_prevista_entrega(dataHoraAgora.toLocalDate().plusDays(5)); // TESTE, POSTERIORMENTE SERÁ POR API
+        validarViagem(viagem);
         Viagem viagemSalva = viagemRepository.save(viagem);
         veiculoService.embarcandoVeiculo(viagemSalva,viagem.getVeiculos());
-        return viagemSalva;
+        return viagemMapper.mapResposta(viagemSalva);
     }
 
     public void deletarViagem(Long id){
@@ -79,6 +86,17 @@ public class ViagemService {
     public Viagem buscarViagemId(Long id){
         return viagemRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado"));
+    }
+
+    public void finalizarViagem(Long id, FinalizarViagemRequisicaoDTO finalizarViagemRequisicaoDTO){
+        Viagem viagem = viagemRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado"));
+        if(viagem.getData_entrega() != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Viagem já foi finalizada");
+        }
+        veiculoService.veiculoEntregue(viagem, viagem.getVeiculos());
+        viagem.setData_entrega(finalizarViagemRequisicaoDTO.getData_entrega());
+        viagemRepository.save(viagem);
     }
 
 }

@@ -1,6 +1,9 @@
 package br.com.arthur.transporte_veiculos.Controller;
 
 
+import br.com.arthur.transporte_veiculos.DTO.Viagem.FinalizarViagemRequisicaoDTO;
+import br.com.arthur.transporte_veiculos.DTO.Viagem.ViagemDTO;
+import br.com.arthur.transporte_veiculos.DTO.Viagem.ViagemRespostaDTO;
 import br.com.arthur.transporte_veiculos.Entity.Viagem;
 import br.com.arthur.transporte_veiculos.Service.ViagemService;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +21,8 @@ public class ViagemController {
     private final ViagemService viagemService;
 
     @PostMapping
-    public ResponseEntity<Viagem> criarViagem(@RequestBody Viagem viagem){
-        Viagem viagemCriada = viagemService.criarViagem(viagem);
+    public ResponseEntity<ViagemRespostaDTO> criarViagem(@RequestBody ViagemDTO viagemDto){
+        ViagemRespostaDTO viagemCriada = viagemService.criarViagem(viagemDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(viagemCriada);
     }
 
@@ -45,5 +48,11 @@ public class ViagemController {
     public ResponseEntity<Viagem> buscarViagemId(@PathVariable Long id) {
         Viagem viagem = viagemService.buscarViagemId(id);
         return ResponseEntity.ok().body(viagem);
+    }
+
+    @PutMapping("/finalizar-viagem/{id}")
+    public ResponseEntity<String> finalizarViagem(@PathVariable Long id, @RequestBody FinalizarViagemRequisicaoDTO finalizarViagemRequisicaoDTO){
+        viagemService.finalizarViagem(id, finalizarViagemRequisicaoDTO);
+        return ResponseEntity.noContent().build();
     }
 }
