@@ -29,4 +29,5 @@ public class Motorista {
     @JoinColumn(name = "transportadora_id")
     private Transportadora transportadora;
     private boolean ativo;
+    private String numero_motorista;
 }
