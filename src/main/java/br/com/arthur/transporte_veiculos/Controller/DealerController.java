@@ -1,6 +1,7 @@
 package br.com.arthur.transporte_veiculos.Controller;
 
 
+import br.com.arthur.transporte_veiculos.DTO.Dealer.DealerDTO;
 import br.com.arthur.transporte_veiculos.Entity.Dealer;
 import br.com.arthur.transporte_veiculos.Service.DealerService;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,8 @@ public class DealerController {
 
 
     @PostMapping
-    public ResponseEntity<Dealer> criarDealer(@RequestBody Dealer dealer){
-        Dealer dealerCriado = dealerService.criarDealer(dealer);
+    public ResponseEntity<DealerDTO> criarDealer(@RequestBody DealerDTO dealerDTO){
+        DealerDTO dealerCriado = dealerService.criarDealer(dealerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(dealerCriado);
     }
 
@@ -31,19 +32,19 @@ public class DealerController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Dealer> atualizarDealer(@PathVariable Long id, @RequestBody Dealer dealer){
-        Dealer dealerAtt = dealerService.atualizarDealer(id,dealer);
+    public ResponseEntity<DealerDTO> atualizarDealer(@PathVariable Long id, @RequestBody DealerDTO dealerDTO){
+        DealerDTO dealerAtt = dealerService.atualizarDealer(id,dealerDTO);
         return ResponseEntity.ok().body(dealerAtt);
     }
 
     @GetMapping
-    public ResponseEntity<List<Dealer>> listarDealers(){
+    public ResponseEntity<List<DealerDTO>> listarDealers(){
         return ResponseEntity.ok().body(dealerService.listarDealers());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Dealer> buscarDealerId(@PathVariable Long id){
-        Dealer dealer = dealerService.buscarDealerId(id);
+    public ResponseEntity<DealerDTO> buscarDealerId(@PathVariable Long id){
+        DealerDTO dealer = dealerService.buscarDealerId(id);
         return ResponseEntity.ok().body(dealer);
     }
 

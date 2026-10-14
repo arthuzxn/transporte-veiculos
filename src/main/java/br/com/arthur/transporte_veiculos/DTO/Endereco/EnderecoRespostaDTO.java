@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EnderecoRespostaDTO {
-    private Long id;
     private String cep;
     private String logradouro;
     private Short numero;

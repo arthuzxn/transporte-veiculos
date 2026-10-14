@@ -1,5 +1,7 @@
 package br.com.arthur.transporte_veiculos.Service;
 
+import br.com.arthur.transporte_veiculos.DTO.Filial.FilialDTO;
+import br.com.arthur.transporte_veiculos.DTO.Filial.FilialMapper;
 import br.com.arthur.transporte_veiculos.Entity.Filial;
 import br.com.arthur.transporte_veiculos.Repository.FilialRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +16,12 @@ import java.util.List;
 public class FilialService {
 
     private final FilialRepository filialRepository;
+    private final FilialMapper filialMapper;
 
-    public Filial criarFilial(Filial filial){
-        return filialRepository.save(filial);
+    public FilialDTO criarFilial(FilialDTO filialDTO){
+        Filial filialSalva = filialMapper.map(filialDTO);
+        filialRepository.save(filialSalva);
+        return filialMapper.map(filialSalva);
     }
 
     public void deletarFilial(Long id){
@@ -26,20 +31,22 @@ public class FilialService {
         filialRepository.deleteById(id);
     }
 
-    public Filial atualizarFilial(Long id,Filial filial){
+    public FilialDTO atualizarFilial(Long id,FilialDTO filialDTO){
         if(!filialRepository.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado");
         }
+        Filial filial = filialMapper.map(filialDTO);
         filial.setId(id);
-        return filialRepository.save(filial);
+        filialRepository.save(filial);
+        return filialMapper.map(filial);
     }
 
-    public List<Filial> listarFiliais(){
-        return filialRepository.findAll();
+    public List<FilialDTO> listarFiliais(){
+        return filialRepository.findAll().stream().map(filialMapper::map).toList();
     }
 
-    public Filial buscarFilialId(Long id){
-        return filialRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"ID "+id+", não encontrado"));
+    public FilialDTO buscarFilialId(Long id){
+        return filialMapper.map(filialRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"ID "+id+", não encontrado")));
     }
 }

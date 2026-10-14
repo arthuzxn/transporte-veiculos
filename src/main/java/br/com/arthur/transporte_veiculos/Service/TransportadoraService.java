@@ -1,5 +1,7 @@
 package br.com.arthur.transporte_veiculos.Service;
 
+import br.com.arthur.transporte_veiculos.DTO.Transportadora.TransportadoraDTO;
+import br.com.arthur.transporte_veiculos.DTO.Transportadora.TransportadoraMapper;
 import br.com.arthur.transporte_veiculos.Entity.Transportadora;
 import br.com.arthur.transporte_veiculos.Repository.TransportadoraRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +18,12 @@ import java.util.List;
 public class TransportadoraService {
 
     private final TransportadoraRepository transportadoraRepository;
+    private  final TransportadoraMapper transportadoraMapper;
 
-    public Transportadora criarTransportadora(Transportadora transportadora){
-        return transportadoraRepository.save(transportadora);
+    public TransportadoraDTO criarTransportadora(TransportadoraDTO transportadoraDTO){
+        Transportadora transportadoraSalva = transportadoraMapper.map(transportadoraDTO);
+        transportadoraRepository.save(transportadoraSalva);
+        return transportadoraMapper.map(transportadoraSalva);
     }
 
     public void deletarTransportadora(Long id){
@@ -28,21 +33,23 @@ public class TransportadoraService {
         transportadoraRepository.deleteById(id);
     }
 
-    public Transportadora atualizarTransportadora(Long id, Transportadora transportadora){
-        if(transportadoraRepository.existsById(id)){
-            transportadora.setId(id);
-            return transportadoraRepository.save(transportadora);
+    public TransportadoraDTO atualizarTransportadora(Long id, TransportadoraDTO transportadoraDTO){
+        if(!transportadoraRepository.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"ID "+id+", não encontrado");
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"ID "+id+", não encontrado");
+        Transportadora transportadora = transportadoraMapper.map(transportadoraDTO);
+        transportadora.setId(id);
+        transportadoraRepository.save(transportadora);
+        return TransportadoraMapper.map(transportadora);
     }
 
-    public List<Transportadora> listarTransportadoras(){
-        return transportadoraRepository.findAll();
+    public List<TransportadoraDTO> listarTransportadoras(){
+        return transportadoraRepository.findAll().stream().map(TransportadoraMapper::map).toList();
     }
 
-    public Transportadora buscarTransportadoraId(Long id) {
-        return transportadoraRepository.findById(id)
-                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"ID "+id+", não encontrado"));
+    public TransportadoraDTO buscarTransportadoraId(Long id) {
+        return TransportadoraMapper.map(transportadoraRepository.findById(id)
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"ID "+id+", não encontrado")));
     }
 
 }

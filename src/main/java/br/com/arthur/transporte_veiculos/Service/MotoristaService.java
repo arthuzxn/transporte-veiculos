@@ -1,5 +1,7 @@
 package br.com.arthur.transporte_veiculos.Service;
 
+import br.com.arthur.transporte_veiculos.DTO.Motorista.MotoristaDTO;
+import br.com.arthur.transporte_veiculos.DTO.Motorista.MotoristaMapper;
 import br.com.arthur.transporte_veiculos.Entity.Motorista;
 import br.com.arthur.transporte_veiculos.Repository.MotoristaRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +16,12 @@ import java.util.List;
 public class MotoristaService {
 
     private final MotoristaRepository motoristaRepository;
+    private final MotoristaMapper motoristaMapper;
 
-    public Motorista criarMotorista(Motorista motorista){
-        return motoristaRepository.save(motorista);
+    public MotoristaDTO criarMotorista(MotoristaDTO motoristaDTO){
+        Motorista motoristaSalvo = motoristaMapper.map(motoristaDTO);
+        motoristaRepository.save(motoristaSalvo);
+        return motoristaMapper.map(motoristaSalvo);
     }
 
     public void deletarMotorista(Long id){
@@ -26,26 +31,28 @@ public class MotoristaService {
         motoristaRepository.deleteById(id);
     }
 
-    public Motorista atualizarMotorista(Long id, Motorista motorista){
-        if(motoristaRepository.existsById(id)){
-            motorista.setId(id);
-            return motoristaRepository.save(motorista);
+    public MotoristaDTO atualizarMotorista(Long id, MotoristaDTO motoristaDTO){
+        if(!motoristaRepository.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"ID "+id+", não encontrado");
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"ID "+id+", não encontrado");
+        Motorista motorista = motoristaMapper.map(motoristaDTO);
+        motorista.setId(id);
+        motoristaRepository.save(motorista);
+        return motoristaMapper.map(motorista);
     }
 
-    public List<Motorista> listarMotoristas(){
-        return motoristaRepository.findAll();
+    public List<MotoristaDTO> listarMotoristas(){
+        return motoristaRepository.findAll().stream().map(motoristaMapper::map).toList();
     }
 
-    public Motorista buscarMotoristaId(Long id){
-        return motoristaRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"ID "+id+", não encontrado" ));
+    public MotoristaDTO buscarMotoristaId(Long id){
+        return motoristaMapper.map(motoristaRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"ID "+id+", não encontrado" )));
     }
 
     //VERIFICAR MOTORISTA ATIVO
     public boolean motoristaAtivo(Long id){
-        Motorista motorista = buscarMotoristaId(id);
+        MotoristaDTO motorista = buscarMotoristaId(id);
         return motorista.isAtivo();
     }
 

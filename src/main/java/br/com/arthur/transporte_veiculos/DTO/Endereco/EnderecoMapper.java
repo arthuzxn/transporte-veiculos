@@ -19,7 +19,6 @@ public class EnderecoMapper {
 
     public EnderecoRespostaDTO map(Endereco endereco){
         EnderecoRespostaDTO respostaDTO = new EnderecoRespostaDTO();
-        respostaDTO.setId(endereco.getId());
         respostaDTO.setCep(endereco.getCep());
         respostaDTO.setLogradouro(endereco.getLogradouro());
         respostaDTO.setNumero(endereco.getNumero());
@@ -40,6 +39,18 @@ public class EnderecoMapper {
         endereco.setBairro(viaCepDTO.getBairro());
         endereco.setCidade(viaCepDTO.getLocalidade());
         endereco.setEstado(viaCepDTO.getEstado());
+        return endereco;
+    }
+
+    public Endereco map(EnderecoRespostaDTO enderecoRespostaDTO) {
+        Endereco endereco = new Endereco();
+        endereco.setCep(enderecoRespostaDTO.getCep());
+        endereco.setLogradouro(enderecoRespostaDTO.getLogradouro());
+        endereco.setNumero(enderecoRespostaDTO.getNumero());
+        endereco.setComplemento(enderecoRespostaDTO.getComplemento());
+        endereco.setBairro(enderecoRespostaDTO.getBairro());
+        endereco.setCidade(enderecoRespostaDTO.getCidade());
+        endereco.setEstado(enderecoRespostaDTO.getEstado());
         return endereco;
     }
 }

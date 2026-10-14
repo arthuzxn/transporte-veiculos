@@ -1,5 +1,6 @@
 package br.com.arthur.transporte_veiculos.Controller;
 
+import br.com.arthur.transporte_veiculos.DTO.Filial.FilialDTO;
 import br.com.arthur.transporte_veiculos.Entity.Filial;
 import br.com.arthur.transporte_veiculos.Service.FilialService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class FilialController {
     private final FilialService filialService;
 
     @PostMapping
-    public ResponseEntity<Filial> criarFilial(@RequestBody Filial filial){
-        Filial filialCriada = filialService.criarFilial(filial);
+    public ResponseEntity<FilialDTO> criarFilial(@RequestBody FilialDTO filialDTO){
+        FilialDTO filialCriada = filialService.criarFilial(filialDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(filialCriada);
     }
 
@@ -29,19 +30,19 @@ public class FilialController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Filial> atualizarFilial(@PathVariable Long id, @RequestBody Filial filial){
-        Filial FilialAtt = filialService.atualizarFilial(id,filial);
+    public ResponseEntity<FilialDTO> atualizarFilial(@PathVariable Long id, @RequestBody FilialDTO filialDTO){
+        FilialDTO FilialAtt = filialService.atualizarFilial(id,filialDTO);
         return ResponseEntity.ok().body(FilialAtt);
     }
 
     @GetMapping
-    public ResponseEntity<List<Filial>> listarDealers(){
+    public ResponseEntity<List<FilialDTO>> listarDealers(){
         return ResponseEntity.ok().body(filialService.listarFiliais());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Filial> buscarFilialId(@PathVariable Long id){
-        Filial filial = filialService.buscarFilialId(id);
+    public ResponseEntity<FilialDTO> buscarFilialId(@PathVariable Long id){
+        FilialDTO filial = filialService.buscarFilialId(id);
         return ResponseEntity.ok().body(filial);
     }
 }

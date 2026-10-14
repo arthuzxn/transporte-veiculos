@@ -1,6 +1,7 @@
 package br.com.arthur.transporte_veiculos.Controller;
 
 
+import br.com.arthur.transporte_veiculos.DTO.Veiculo.VeiculoDTO;
 import br.com.arthur.transporte_veiculos.Entity.Veiculo;
 import br.com.arthur.transporte_veiculos.Service.VeiculoService;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,9 @@ public class VeiculoController {
     private final VeiculoService veiculoService;
 
     @PostMapping
-    public ResponseEntity<Veiculo> criarVeiculo(@RequestBody Veiculo veiculo){
-        Veiculo VeiculoCriado = veiculoService.criarVeiculo(veiculo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(veiculo);
+    public ResponseEntity<VeiculoDTO> criarVeiculo(@RequestBody VeiculoDTO veiculoDTO){
+        VeiculoDTO VeiculoCriado = veiculoService.criarVeiculo(veiculoDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(VeiculoCriado);
     }
 
     @DeleteMapping("{id}")
@@ -30,19 +31,19 @@ public class VeiculoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Veiculo> atualizarVeiculo(@PathVariable Long id, @RequestBody Veiculo veiculo){
-        Veiculo veiculoAtt = veiculoService.atualizarVeiculo(id,veiculo);
+    public ResponseEntity<VeiculoDTO> atualizarVeiculo(@PathVariable Long id, @RequestBody VeiculoDTO veiculoDTO){
+        VeiculoDTO veiculoAtt = veiculoService.atualizarVeiculo(id,veiculoDTO);
         return ResponseEntity.ok().body(veiculoAtt);
     }
 
     @GetMapping
-    public ResponseEntity<List<Veiculo>> listarVeiculos(){
+    public ResponseEntity<List<VeiculoDTO>> listarVeiculos(){
         return ResponseEntity.ok().body(veiculoService.listarVeiculos());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Veiculo> buscarVeiculoId(@PathVariable Long id){
-        Veiculo veiculo = veiculoService.buscarVeiculoId(id);
+    public ResponseEntity<VeiculoDTO> buscarVeiculoId(@PathVariable Long id){
+        VeiculoDTO veiculo = veiculoService.buscarVeiculoId(id);
         return ResponseEntity.ok().body(veiculo);
     }
 }

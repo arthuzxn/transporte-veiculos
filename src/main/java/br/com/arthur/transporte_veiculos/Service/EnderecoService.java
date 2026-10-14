@@ -39,21 +39,23 @@ public class EnderecoService {
         enderecoRepository.deleteById(id);
     }
 
-    public Endereco atualizarEndereco(Long id, Endereco endereco){
+    public EnderecoRespostaDTO atualizarEndereco(Long id, EnderecoRespostaDTO enderecoRespostaDTO){
         if(!enderecoRepository.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado");
         }
+        Endereco endereco = enderecoMapper.map(enderecoRespostaDTO);
         endereco.setId(id);
-        return enderecoRepository.save(endereco);
+        enderecoRepository.save(endereco);
+        return enderecoMapper.map(endereco);
     }
 
-    public List<Endereco> listarEnderecos(){
-        return enderecoRepository.findAll();
+    public List<EnderecoRespostaDTO> listarEnderecos() {
+        return enderecoRepository.findAll().stream().map(enderecoMapper::map).toList();
     }
 
-    public Endereco buscarEnderecoId(Long id){
-        return enderecoRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado"));
+    public EnderecoRespostaDTO buscarEnderecoId(Long id){
+        return enderecoMapper.map(enderecoRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado")));
     }
 
 }

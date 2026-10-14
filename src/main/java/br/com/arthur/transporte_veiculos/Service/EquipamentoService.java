@@ -1,6 +1,8 @@
 package br.com.arthur.transporte_veiculos.Service;
 
 
+import br.com.arthur.transporte_veiculos.DTO.Equipamento.EquipamentoDTO;
+import br.com.arthur.transporte_veiculos.DTO.Equipamento.EquipamentoMapper;
 import br.com.arthur.transporte_veiculos.Entity.Equipamento;
 import br.com.arthur.transporte_veiculos.Repository.EquipamentoRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +17,12 @@ import java.util.List;
 public class EquipamentoService {
 
     private final EquipamentoRepository equipamentoRepository;
+    private final EquipamentoMapper equipamentoMapper;
 
-    public Equipamento criarEquipamento(Equipamento equipamento){
-        return equipamentoRepository.save(equipamento);
+    public EquipamentoDTO criarEquipamento(EquipamentoDTO equipamentoDTO){
+        Equipamento equipamentoSalvo = equipamentoMapper.map(equipamentoDTO);
+        equipamentoRepository.save(equipamentoSalvo);
+        return equipamentoMapper.map(equipamentoSalvo);
     }
 
     public void deletarEquipamento(Long id){
@@ -27,21 +32,23 @@ public class EquipamentoService {
         equipamentoRepository.deleteById(id);
     }
 
-    public Equipamento atualizarEquipamento(Long id, Equipamento equipamento){
-        if(equipamentoRepository.existsById(id)){
-            equipamento.setId(id);
-            return equipamentoRepository.save(equipamento);
+    public EquipamentoDTO atualizarEquipamento(Long id, EquipamentoDTO equipamentoDTO){
+        if(!equipamentoRepository.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado");
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado");
+        Equipamento equipamento = equipamentoMapper.map(equipamentoDTO);
+        equipamento.setId(id);
+        equipamentoRepository.save(equipamento);
+        return equipamentoMapper.map(equipamento);
     }
 
-    public List<Equipamento> listarEquipamentos(){
-        return equipamentoRepository.findAll();
+    public List<EquipamentoDTO> listarEquipamentos(){
+        return equipamentoRepository.findAll().stream().map(equipamentoMapper::map).toList();
     }
 
-    public Equipamento buscarEquipamentoId(Long id){
-        return equipamentoRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID"+id+", não encontrado"));
+    public EquipamentoDTO buscarEquipamentoId(Long id){
+        return equipamentoMapper.map(equipamentoRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID"+id+", não encontrado")));
     }
 
 }

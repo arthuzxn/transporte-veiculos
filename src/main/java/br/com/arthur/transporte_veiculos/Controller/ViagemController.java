@@ -2,6 +2,7 @@ package br.com.arthur.transporte_veiculos.Controller;
 
 
 import br.com.arthur.transporte_veiculos.DTO.Viagem.FinalizarViagemRequisicaoDTO;
+import br.com.arthur.transporte_veiculos.DTO.Viagem.ViagemConsultaDTO;
 import br.com.arthur.transporte_veiculos.DTO.Viagem.ViagemDTO;
 import br.com.arthur.transporte_veiculos.DTO.Viagem.ViagemRespostaDTO;
 import br.com.arthur.transporte_veiculos.Entity.Viagem;
@@ -32,21 +33,15 @@ public class ViagemController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Viagem> atualizarViagem(@PathVariable Long id,@RequestBody Viagem viagem){
-        Viagem viagemAtt = viagemService.atualizarViagem(id,viagem);
-        return ResponseEntity.ok().body(viagemAtt);
-    }
-
     @GetMapping
-    public ResponseEntity<List<Viagem>> listarViagens(){
-        List<Viagem> viagemList = viagemService.listarViagens();
+    public ResponseEntity<List<ViagemConsultaDTO>> listarViagens(){
+        List<ViagemConsultaDTO> viagemList = viagemService.listarViagens();
         return ResponseEntity.ok().body(viagemList);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Viagem> buscarViagemId(@PathVariable Long id) {
-        Viagem viagem = viagemService.buscarViagemId(id);
+    public ResponseEntity<ViagemConsultaDTO> buscarViagemId(@PathVariable Long id) {
+        ViagemConsultaDTO viagem = viagemService.buscarViagemId(id);
         return ResponseEntity.ok().body(viagem);
     }
 

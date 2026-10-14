@@ -38,4 +38,18 @@ public class ViagemMapper {
         viagemRespostaDTO.setDealers(viagem.getDealers());
         return viagemRespostaDTO;
     }
+
+    public ViagemConsultaDTO mapConsulta(Viagem viagem){
+        ViagemConsultaDTO viagemConsultaDTO = new ViagemConsultaDTO();
+        viagemConsultaDTO.setMotorista(viagem.getMotorista());
+        viagemConsultaDTO.setEquipamento(viagem.getEquipamento());
+        viagemConsultaDTO.setNumero_viagem(viagem.getNumero_viagem());
+        viagemConsultaDTO.setVeiculos(viagem.getVeiculos());
+        viagemConsultaDTO.setFilial(viagem.getFilial());
+        viagemConsultaDTO.setMomento_emissao(viagem.getMomento_emissao());
+        viagemConsultaDTO.setData_prevista_entrega(viagem.getData_prevista_entrega());
+        viagemConsultaDTO.setData_entrega(viagem.getData_entrega());
+        viagemConsultaDTO.setDealers(viagem.getDealers());
+        return  viagemConsultaDTO;
+    }
 }

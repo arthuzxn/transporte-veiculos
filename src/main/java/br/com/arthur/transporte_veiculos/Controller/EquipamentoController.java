@@ -1,5 +1,6 @@
 package br.com.arthur.transporte_veiculos.Controller;
 
+import br.com.arthur.transporte_veiculos.DTO.Equipamento.EquipamentoDTO;
 import br.com.arthur.transporte_veiculos.Entity.Equipamento;
 import br.com.arthur.transporte_veiculos.Service.EquipamentoService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class EquipamentoController {
     private final EquipamentoService equipamentoService;
 
     @PostMapping
-    public ResponseEntity<Equipamento> criarEquipamento(@RequestBody Equipamento equipamento){
-        Equipamento equipamentoCriado = equipamentoService.criarEquipamento(equipamento);
+    public ResponseEntity<EquipamentoDTO> criarEquipamento(@RequestBody EquipamentoDTO equipamentoDTO){
+        EquipamentoDTO equipamentoCriado = equipamentoService.criarEquipamento(equipamentoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(equipamentoCriado);
     }
 
@@ -28,19 +29,19 @@ public class EquipamentoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Equipamento> atualizarEquipamento(@PathVariable Long id, @RequestBody Equipamento equipamento) {
-        Equipamento equipamentoAtt = equipamentoService.atualizarEquipamento(id,equipamento);
+    public ResponseEntity<EquipamentoDTO> atualizarEquipamento(@PathVariable Long id, @RequestBody EquipamentoDTO equipamentoDTO) {
+        EquipamentoDTO equipamentoAtt = equipamentoService.atualizarEquipamento(id,equipamentoDTO);
         return ResponseEntity.ok().body(equipamentoAtt);
     }
 
     @GetMapping
-    public ResponseEntity<List<Equipamento>> listarEquipamentos(){
+    public ResponseEntity<List<EquipamentoDTO>> listarEquipamentos(){
         return ResponseEntity.ok().body(equipamentoService.listarEquipamentos());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Equipamento> buscarEquipamentoId(@PathVariable Long id) {
-        Equipamento equipamentoId = equipamentoService.buscarEquipamentoId(id);
+    public ResponseEntity<EquipamentoDTO> buscarEquipamentoId(@PathVariable Long id) {
+        EquipamentoDTO equipamentoId = equipamentoService.buscarEquipamentoId(id);
         return ResponseEntity.ok().body(equipamentoId);
     }
 

@@ -1,6 +1,7 @@
 package br.com.arthur.transporte_veiculos.Controller;
 
 
+import br.com.arthur.transporte_veiculos.DTO.Transportadora.TransportadoraDTO;
 import br.com.arthur.transporte_veiculos.Entity.Transportadora;
 import br.com.arthur.transporte_veiculos.Service.TransportadoraService;
 import jakarta.persistence.Table;
@@ -19,8 +20,8 @@ public class TransportadoraController {
     private final TransportadoraService transportadoraService;
 
     @PostMapping
-    public ResponseEntity<Transportadora> criarTransportadora(@RequestBody Transportadora transportadora){
-        Transportadora transportadoraCriada = transportadoraService.criarTransportadora(transportadora);
+    public ResponseEntity<TransportadoraDTO> criarTransportadora(@RequestBody TransportadoraDTO transportadoraDTO){
+        TransportadoraDTO transportadoraCriada = transportadoraService.criarTransportadora(transportadoraDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(transportadoraCriada);
     }
 
@@ -31,19 +32,19 @@ public class TransportadoraController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Transportadora> atualizarTransportadora(@PathVariable Long id,@RequestBody Transportadora transportadora){
-        Transportadora transportadoraAtt = transportadoraService.atualizarTransportadora(id,transportadora);
+    public ResponseEntity<TransportadoraDTO> atualizarTransportadora(@PathVariable Long id,@RequestBody TransportadoraDTO transportadoraDTO){
+        TransportadoraDTO transportadoraAtt = transportadoraService.atualizarTransportadora(id,transportadoraDTO);
         return ResponseEntity.ok().body(transportadoraAtt);
     }
 
     @GetMapping
-    public ResponseEntity<List<Transportadora>> listarTransportadoras(){
+    public ResponseEntity<List<TransportadoraDTO>> listarTransportadoras(){
         return ResponseEntity.ok().body(transportadoraService.listarTransportadoras());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Transportadora> buscarTransportadoraId(@PathVariable Long id){
-        Transportadora transportadora = transportadoraService.buscarTransportadoraId(id);
+    public ResponseEntity<TransportadoraDTO> buscarTransportadoraId(@PathVariable Long id){
+        TransportadoraDTO transportadora = transportadoraService.buscarTransportadoraId(id);
         return ResponseEntity.ok().body(transportadora);
     }
 }

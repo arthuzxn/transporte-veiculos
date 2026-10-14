@@ -1,6 +1,7 @@
 package br.com.arthur.transporte_veiculos.Controller;
 
 
+import br.com.arthur.transporte_veiculos.DTO.Motorista.MotoristaDTO;
 import br.com.arthur.transporte_veiculos.Entity.Motorista;
 import br.com.arthur.transporte_veiculos.Service.MotoristaService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class MotoristaController {
     private final MotoristaService motoristaService;
 
     @PostMapping
-    public ResponseEntity<Motorista> criarMotorista(@RequestBody Motorista motorista){
-        Motorista motoristaCriado = motoristaService.criarMotorista(motorista);
+    public ResponseEntity<MotoristaDTO> criarMotorista(@RequestBody MotoristaDTO motoristaDTO){
+        MotoristaDTO motoristaCriado = motoristaService.criarMotorista(motoristaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(motoristaCriado);
     }
 
@@ -29,18 +30,18 @@ public class MotoristaController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Motorista> atualizarMotorista(@PathVariable Long id,@RequestBody Motorista motorista) {
-        Motorista motoristaAtt = motoristaService.atualizarMotorista(id, motorista);
+    public ResponseEntity<MotoristaDTO> atualizarMotorista(@PathVariable Long id,@RequestBody MotoristaDTO motoristaDTO) {
+        MotoristaDTO motoristaAtt = motoristaService.atualizarMotorista(id, motoristaDTO);
         return ResponseEntity.ok().body(motoristaAtt);
     }
     @GetMapping
-    public ResponseEntity<List<Motorista>> listarMotoristas(){
+    public ResponseEntity<List<MotoristaDTO>> listarMotoristas(){
         return ResponseEntity.ok().body(motoristaService.listarMotoristas());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Motorista> buscarMotoristaId(@PathVariable Long id){
-        Motorista motorista = motoristaService.buscarMotoristaId(id);
+    public ResponseEntity<MotoristaDTO> buscarMotoristaId(@PathVariable Long id){
+        MotoristaDTO motorista = motoristaService.buscarMotoristaId(id);
         return ResponseEntity.ok().body(motorista);
     }
 

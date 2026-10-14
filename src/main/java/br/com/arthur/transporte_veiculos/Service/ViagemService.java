@@ -1,10 +1,7 @@
 package br.com.arthur.transporte_veiculos.Service;
 
 
-import br.com.arthur.transporte_veiculos.DTO.Viagem.FinalizarViagemRequisicaoDTO;
-import br.com.arthur.transporte_veiculos.DTO.Viagem.ViagemDTO;
-import br.com.arthur.transporte_veiculos.DTO.Viagem.ViagemMapper;
-import br.com.arthur.transporte_veiculos.DTO.Viagem.ViagemRespostaDTO;
+import br.com.arthur.transporte_veiculos.DTO.Viagem.*;
 import br.com.arthur.transporte_veiculos.Entity.Viagem;
 import br.com.arthur.transporte_veiculos.Repository.ViagemRepository;
 import lombok.RequiredArgsConstructor;
@@ -71,21 +68,13 @@ public class ViagemService {
         viagemRepository.deleteById(id);
     }
 
-    public Viagem atualizarViagem(Long id, Viagem viagem){
-        if(!viagemRepository.existsById(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado");
-        }
-        viagem.setId(id);
-        return viagemRepository.save(viagem);
+    public List<ViagemConsultaDTO> listarViagens(){
+        return viagemRepository.findAll().stream().map(viagemMapper::mapConsulta).toList();
     }
 
-    public List<Viagem> listarViagens(){
-        return viagemRepository.findAll();
-    }
-
-    public Viagem buscarViagemId(Long id){
-        return viagemRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado"));
+    public ViagemConsultaDTO buscarViagemId(Long id){
+        return viagemMapper.mapConsulta(viagemRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID "+id+", não encontrado")));
     }
 
     public void finalizarViagem(Long id, FinalizarViagemRequisicaoDTO finalizarViagemRequisicaoDTO){
