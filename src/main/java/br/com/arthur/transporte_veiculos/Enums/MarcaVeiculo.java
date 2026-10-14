@@ -9,5 +9,11 @@ public enum MarcaVeiculo {
     NISSAN,
     TOYOTA,
     PEUGEOT,
-    CITROEN
+    CITROEN,
+    GEELY,
+    HONDA,
+    HYUNDAI,
+    FORD,
+    JEEP,
+    MITSUBISHI
 }
