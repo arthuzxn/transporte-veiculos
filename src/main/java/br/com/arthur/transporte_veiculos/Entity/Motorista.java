@@ -19,6 +19,7 @@ public class Motorista {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String cpf;
     private String nome;
     @JsonIgnore

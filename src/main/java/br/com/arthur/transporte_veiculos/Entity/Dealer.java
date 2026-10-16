@@ -19,7 +19,7 @@ public class Dealer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "codigo_dealer", nullable = false)
+    @Column(name = "codigo_dealer", nullable = false, unique = true)
     private String codigo_dealer;
     private String nome;
     @OneToOne

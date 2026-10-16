@@ -20,6 +20,7 @@ public class Filial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String codigoFilial;
     private String apelido;
     @OneToOne

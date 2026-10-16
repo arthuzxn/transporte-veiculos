@@ -22,6 +22,7 @@ public class Veiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String chassi;
     private String modelo;
     @Enumerated(EnumType.STRING)

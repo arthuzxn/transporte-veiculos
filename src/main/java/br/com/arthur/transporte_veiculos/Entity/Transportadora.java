@@ -20,6 +20,7 @@ public class Transportadora {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    @Column(unique = true)
     private String cnpj;
     @JsonIgnore
     @OneToMany(mappedBy = "transportadora")
