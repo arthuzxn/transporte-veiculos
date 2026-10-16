@@ -68,7 +68,8 @@ public class VeiculoService {
         }
     }
 
-    public void veiculoEntregue(Viagem viagem, List<Veiculo> veiculosEntregues){
+    public void veiculoEntregue(Viagem viagem){
+        List<Veiculo> veiculosEntregues = viagem.getVeiculos();
         for(Veiculo veiculo: veiculosEntregues ){
             if(veiculo.getStatus() != StatusVeiculo.EMBARCADO){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Veiculo não pode ser entregue sem estar embarcado");

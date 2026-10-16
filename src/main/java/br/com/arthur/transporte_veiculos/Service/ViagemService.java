@@ -88,7 +88,7 @@ public class ViagemService {
         if(viagem.getData_entrega() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Viagem já foi finalizada");
         }
-        veiculoService.veiculoEntregue(viagem, viagem.getVeiculos());
+        veiculoService.veiculoEntregue(viagem);
         viagem.setData_entrega(finalizarViagemRequisicaoDTO.getData_entrega());
         viagemRepository.save(viagem);
     }
