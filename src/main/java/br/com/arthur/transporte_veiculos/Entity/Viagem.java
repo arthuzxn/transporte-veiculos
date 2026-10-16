@@ -43,6 +43,6 @@ public class Viagem {
             inverseJoinColumns = @JoinColumn(name = "id_dealer")
     )
     private List<Dealer> dealers;
-
+    public static final int MAX_VEICULOS = 11;
 
 }

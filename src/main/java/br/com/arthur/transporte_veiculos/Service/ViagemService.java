@@ -12,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static br.com.arthur.transporte_veiculos.Entity.Viagem.MAX_VEICULOS;
+
 @Service
 @RequiredArgsConstructor
 public class ViagemService {
@@ -22,14 +24,14 @@ public class ViagemService {
     private final ViagemMapper viagemMapper;
 
     public void validarViagem(Viagem viagem){
-
         if(!motoristaService.motoristaAtivo(viagem.getMotorista().getId())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Motorista escolhido para a viagem está BLOQUEADO");
         }
 
-        if(viagem.getVeiculos().isEmpty()){
+        if(viagem.getVeiculos() == null || viagem.getVeiculos().isEmpty()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Viagem sem nenhum veículo");
         }
+
 
         List<Viagem> viagens = viagemRepository.findAll();
         boolean validarViagemPendenteEquipamento = viagens.stream()
@@ -48,6 +50,9 @@ public class ViagemService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Motorista está em viagem");
         }
 
+        if(viagem.getVeiculos().size() > MAX_VEICULOS ){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O LIMITE MÁXIMO DE VEICULOS TRANSPORTADOS PERMITIDO É "+ MAX_VEICULOS);
+        }
     }
 
     public ViagemRespostaDTO criarViagem(ViagemDTO viagemDTO){
